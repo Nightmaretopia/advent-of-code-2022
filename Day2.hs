@@ -9,12 +9,12 @@ main = do
     
     print
         $ sum
-        $ liftM2 (+) (getResultPoint . calculateResult) (getShapeScore . snd)
+        $ liftM2 (+) (getResultScore . calculateResult) (getShapeScore . snd)
             . bimap getElfShape getMyShape <$> rounds
 
     print
         $ sum
-        $ liftM2 (+) (getResultPoint . snd) (getShapeScore . getShapeToPlay)
+        $ liftM2 (+) (getResultScore . snd) (getShapeScore . getShapeToPlay)
             . bimap getElfShape getEnd <$> rounds
 
 data Shape = Rock | Paper | Scissors deriving (Eq)
@@ -44,8 +44,8 @@ calculateResult (a,b)
     | a == Rock && b == Paper || a == Paper && b == Scissors || a == Scissors && b == Rock = Win
     | otherwise = Lose
 
-getResultPoint :: Result -> Int
-getResultPoint r = case r of
+getResultScore :: Result -> Int
+getResultScore r = case r of
     Lose -> 0
     Draw -> 3
     Win  -> 6
